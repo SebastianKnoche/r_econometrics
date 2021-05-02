@@ -1,0 +1,58 @@
+---
+title: "linear regression 1"
+author: "NAMAZI | SCHMALHOFER | KNOCHE"
+date: "04/21/2021"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# loading packages
+library(wooldridge)
+# loading data sets 
+data("hprice1")
+data("bwght")
+```
+
+#### `hprice` data set
+popular visualisation option
+```{r}
+boxplot(hprice1$price)
+```
+
+informative numbers - standard quantiles in this case
+```{r}
+summary(hprice1$price)
+```
+
+linear regression
+```{r}
+my_linear_1 <- lm(price ~ sqrft, data = hprice1)
+my_linear_1  # coefficients only
+```
+
+informative numbers - more than I could tell...
+```{r}
+summary(my_linear_1)
+```
+
+
+#### `bwght` data set
+popular visualisation option
+```{r}
+boxplot(bwght$cigs)
+```
+
+informative numbers - standard quantiles in this case
+```{r}
+summary(bwght$cigs)
+```
+
+
+```{r}
+table(bwght$cigs)
+
+model_1 <- lm(bwght ~ cigs, data = bwght)
+model_1
+summary(model_1)
+```

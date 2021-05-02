@@ -1,0 +1,72 @@
+---
+title: "GROUP ASSIGNMENTS 2021-04-21"
+author: "NAMAZI | SCHMALHOFER | KNOCHE"
+date: "04/21/2021"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# loading packages
+library(wooldridge)
+# loading data sets 
+data("ceosal2")
+data("sleep75")
+```
+
+#### ASSIGNMENT C2
+The dataset `ceosal2.dta` contains information on chief executive officers for U.S. corporations. The variable `salary` is annual compensation, in thousands of dollars, and `ceoten` is prior number of years as company CEO.
+
+1. Find the average salary and the average tenure in the sample.
+```{r}
+mean(ceosal2$salary)  # average salary
+mean(ceosal2$ceoten)  # average tenure
+```
+
+2. How many CEOs are in the first year as CEO (that is, `ceoten = 0`)?.  
+What is the longest tenure as a CEO?
+```{r}
+sum(ceosal2$ceoten == 0)  # CEOs in first year
+max(ceosal2$ceoten)       # longest tenure as CEO
+```
+
+3. Estimate the simple regression model $log(salary) = \beta_{0} + \beta_{1}ceoten + u$.  
+Report your results. What is the (approximate) predicted percentage increase in salary given one more year as a CEO?
+```{r}
+my_lm_salary <- lm(salary ~ ceoten, data = ceosal2)
+my_lm_salary                  # regression model
+my_lm_salary$coefficients[2]  # the predicted percentage increase in salary
+```
+
+#### ASSIGNMENT C3
+Use the data `sleep75.dta` from Biddle and Hamermesh (1990) to study whether there is a tradeoff between the time spent sleeping per week and the time spent in paid work. We could use either variable as the dependent variable.  
+For concreteness, estimate the model $sleep = \beta_{0} + \beta_{1}totwork + u$, where sleep is minutes spent spleeping at night per week and totwrk is total minutes worked during the week.
+
+1. Report your results in equation form along with the number of observations and $R^{2}$.  
+What does the intercept of the equation mean?
+```{r}
+my_lm_sleep <- lm(sleep ~ totwrk, data = sleep75)         # regression model
+my_intercept_sleep <- my_lm_sleep$coefficients[1]
+my_slope_sleep <- my_lm_sleep$coefficients[2]
+my_summary_sleep <- summary(my_lm_sleep)
+my_r_squared_sleep <- my_summary_sleep$r.squared          # R^2
+```
+report in equation
+```{r echo=FALSE}
+print(paste("sleep =", round(my_intercept_sleep, 4),
+            "+ (", round(my_slope_sleep, 4), "*",
+            names(my_slope_sleep), ") + u"))
+```
+form along with $R^{2}$
+```{r echo=FALSE}
+print(paste("R^2 =", round(my_r_squared_sleep, 4)))
+```
+The intercept of the equation corresponds to the amount of minutes per week that someone is expected to be sleeping at night, if they didn't work.
+
+2. If totwrk increases by 2 hours, by how much is sleep estimated to fall?  
+Do you find this to be a large effect?
+```{r echo=FALSE}
+print(paste("Sleep is estimated to change by 120 minutes *", names(my_slope_sleep),
+            "=", round(120 * my_slope_sleep, 4), "minutes per week."))
+```
+In this case sleep would fall by 18.0895 minutes per week. That doesn't seem to be a large effect.
