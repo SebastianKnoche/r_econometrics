@@ -1,0 +1,108 @@
+---
+title: "GROUP ASSIGNMENTS 2021-04-28"
+author: "NAMAZI | SCHMALHOFER | KNOCHE"
+date: "04/28/2021"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# loading packages
+library(wooldridge)
+# loading data sets 
+data("wage2")
+data("rdchem")
+data("hprice1")
+```
+
+#### Chapter 3 - C2
+Use the data in `hprice1.dta` to estimate the model $price = \beta_{0} + \beta_{1} sqrft + \beta_{2} bdrms + u$, where `price` is the house price measured in thousands of dollars.
+
+```{r}
+my_lm_price <- lm(price ~ sqrft + bdrms, data = hprice1)
+my_lm_price_0 <- my_lm_price$coefficients[1]
+my_lm_price_1 <- my_lm_price$coefficients[2]
+my_lm_price_2 <- my_lm_price$coefficients[3]
+```
+
+1. Write out the results in equation from.
+```{r echo=FALSE}
+print(paste("price =", round(my_lm_price_0, 4), "+", round(my_lm_price_1, 4), "sqrft +",
+            round(my_lm_price_2, 4), "bdrms + u"))
+```
+
+2. What is the estimated increase in price for a house with one more bedroom, holding square footage constant?
+```{r echo=FALSE}
+print("delta-price = delta-ß0 + delta-ß1 sqrft + delta-ß2 bdrms + delta-u")
+print(paste("            = 0 + 0 +", round(my_lm_price_2 * 1, 4), "+ 0 =", round(my_lm_price_2 * 1, 4)))
+```
+
+3. What is the estimated increase in price for a house with an additional bedroom that is
+140 square feet in size? Compare this to your answer in part 2.
+```{r echo=FALSE}
+print("delta-price = delta-ß0 + delta-ß1 sqrft + delta-ß2 bdrms + delta-u")
+print(paste("            = 0 +", round(my_lm_price_1 * 140, 4), "+", round(my_lm_price_2 * 1, 4), "+ 0 =", round(my_lm_price_1 * 140, 4) + round(my_lm_price_2 * 1, 4)))
+```
+
+4. What percentage of the variation in price is explained by square footage and number of
+bedrooms?
+```{r echo=FALSE}
+print(paste("R^2 =", 100 * round(summary(my_lm_price)$r.squared, 4), "%"))
+```
+
+5. The first house in the sample has $sqrft = 2,438$ and $bdrms = 4$. Find the predicted
+selling price for this house from the OLS regression line.
+
+6. The actual selling price of the first house in the sample was \$300,000 (so $price = 300$).  
+Find the residual for this house. Does it suggest that the buyer underpaid or overpaid
+for the house?
+
+7. Run a simple regression where price is only regressed on `bdrms` and compare the `bdrms`-coefficient from this regression with $\hat{\beta_{2}}$ (from part 2). Now confirm the partialling out
+interpretation of OLS estimates by following the partialling out procedure. This first
+requires regressing `bdrms` on `sqrft` and saving the residuals, $\hat{r_{1}}$. Then regress price on $\hat{r_{1}}$ and compare the coefficient on $\hat{r_{1}}$ with $\hat{\beta_{2}}$.
+
+#### Chapter 2 - C4
+Use the data `wage2.dta` to estimate a simple regression explaining monthly salary (`wage`) in terms of IQ score (`IQ`)
+
+1. Find the average salary and average IQ in the sample. What is the sample standard deviation of IQ? (IQ scores are standardized so that the average in the population is 100 with a standard deviation equal to 15.)   
+
+```{r echo=FALSE}
+my_av_wage <- round(mean(wage2$wage), 4)
+my_av_iq <- round(mean(wage2$IQ), 4)
+my_sd_iq <- round(sd(wage2$IQ), 4)
+my_key_values <- c( my_av_wage, my_av_iq, my_sd_iq )
+names(my_key_values) <- c("avg. salary", "avg. IQ", "sd of IQ")
+my_key_values
+```
+
+2. Estimate a simple regression model where a one-point increase in IQ changes `wage` by a constant dollar amount. Use this model to find the predicted increase in wage for an increase in `IQ` of 15 points. Does `IQ` explain most of the variation in `wage`?
+```{r echo=FALSE}
+my_lm_wage <- lm(wage ~ IQ, data = wage2)
+my_lm_wage_0 <- round(my_lm_wage$coefficients[1], 4)
+my_lm_wage_1 <- round(my_lm_wage$coefficients[2], 4)
+my_smry_wage <- summary(my_lm_wage)
+my_r_sqr <- round(my_smry_wage$r.squared, 4) * 100
+print(paste("wage =", my_lm_wage_0, "+", my_lm_wage_1, "IQ + u"))
+print("delta-wage = delta-β0 + delta-β1 IQ + delta-u")
+print(paste("           = 0 +", my_lm_wage_1, "* 15 + 0 =", my_lm_wage_1 * 15))
+print(paste("R^2 =", my_r_sqr, "%"))
+print(ifelse(my_r_sqr <= 50, "IQ does not explain most of the variation in wage.", "IQ explains most of the variation in wage."))
+```
+
+3. Now, estimate a model where each one-point increase in `IQ` has the same percentage effect on `wage`. If `IQ` increases by 15 points, what is the approximate percentage increase in predicted `wage`?
+```{r}
+print(paste("log(wage) =", my_lm_wage_0, "+", my_lm_wage_1, "IQ + u"))
+# print("log(delta-wage) = delta-β0 + delta-β1 IQ + delta-u")
+# print(paste("                = 0 +", my_lm_wage_1, "* 15 + 0 =", my_lm_wage_1 * 15))
+# log(my_lm_wage_1 * 15)
+# log(my_lm_wage_1)+log(15)
+# my_lm_wage_1+15
+```
+
+#### Chapter 2 - C5
+For the population of firms in the chemical industry, let `rd` denote annual expenditures on research and development, and let `sales` denote annual sales (both are in millions of dollars).   
+
+1. Write down a model (not an estimated equation) that implies a constant elasticity between `rd` and `sales`. Which parameter is the elasticity?
+
+2. Now, estimate the model using the data in `rdchem.raw`. Write out the estimated equation in the usual form. What is the estimated elasticity of `rd` with respect to `sales`?  
+Explain in words what this elasticity means.
