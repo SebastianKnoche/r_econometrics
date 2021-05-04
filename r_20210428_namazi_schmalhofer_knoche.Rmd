@@ -2,7 +2,7 @@
 title: "GROUP ASSIGNMENTS 2021-04-28"
 author: "NAMAZI | SCHMALHOFER | KNOCHE"
 date: "04/28/2021"
-output: github_document
+output: html_document
 ---
 
 ```{r setup, include=FALSE}
@@ -16,7 +16,7 @@ data("hprice1")
 ```
 
 #### Chapter 3 - C2
-Use the data in `hprice1.dta` to estimate the model $price = \beta_{0} + \beta_{1} sqrft + \beta_{2} bdrms + u$, where `price` is the house price measured in thousands of dollars.
+Use the data in `hprice1.dta` to estimate the model $$price = \beta_{0} + \beta_{1} sqrft + \beta_{2} bdrms + u$$, where `price` is the house price measured in thousands of dollars.
 
 ```{r}
 my_lm_price <- lm(price ~ sqrft + bdrms, data = hprice1)
@@ -101,7 +101,7 @@ For the population of firms in the chemical industry, let `rd` denote annual exp
 
 1. Write down a model (not an estimated equation) that implies a constant elasticity between `rd` and `sales`. Which parameter is the elasticity?
 
-$PE = \frac{\delta sales}{\delta rd} \frac{ \overline{rd} }{ \overline{sales} }$
+$$PE = \frac{\delta sales}{\delta rd} \frac{ \overline{rd} }{ \overline{sales} }$$
 
 2. Now, estimate the model using the data in `rdchem.raw`. Write out the estimated equation in the usual form. What is the estimated elasticity of `rd` with respect to `sales`?  
 Explain in words what this elasticity means.
