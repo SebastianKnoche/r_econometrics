@@ -15,7 +15,7 @@ data("rdchem")
 data("hprice1")
 ```
 
-#### Chapter 3 - C2
+## Chapter 3 - C2
 Use the data in `hprice1.dta` to estimate the model $$price = \beta_{0} + \beta_{1} sqrft + \beta_{2} bdrms + u$$, where `price` is the house price measured in thousands of dollars.
 
 ```{r}
@@ -59,7 +59,7 @@ for the house?
 
 7. Run a simple regression where price is only regressed on `bdrms` and compare the `bdrms`-coefficient from this regression with $\hat{\beta_{2}}$ (from part 2). Now confirm the partialling out interpretation of OLS estimates by following the partialling out procedure. This first requires regressing `bdrms` on `sqrft` and saving the residuals, $\hat{r_{1}}$. Then regress price on $\hat{r_{1}}$ and compare the coefficient on $\hat{r_{1}}$ with $\hat{\beta_{2}}$.
 
-#### Chapter 2 - C4
+## Chapter 2 - C4
 Use the data `wage2.dta` to estimate a simple regression explaining monthly salary (`wage`) in terms of IQ score (`IQ`)
 
 1. Find the average salary and average IQ in the sample. What is the sample standard deviation of IQ? (IQ scores are standardized so that the average in the population is 100 with a standard deviation equal to 15.)   
@@ -96,7 +96,7 @@ print(paste("log(wage) = (", my_wage_incr, "/ (", my_lm_wage_1, "+", my_wage_inc
 print(paste("          =", my_gr, "=", my_gr * 100, "%"))
 ```
 
-#### Chapter 2 - C5
+## Chapter 2 - C5
 For the population of firms in the chemical industry, let `rd` denote annual expenditures on research and development, and let `sales` denote annual sales (both are in millions of dollars).   
 
 1. Write down a model (not an estimated equation) that implies a constant elasticity between `rd` and `sales`. Which parameter is the elasticity?
