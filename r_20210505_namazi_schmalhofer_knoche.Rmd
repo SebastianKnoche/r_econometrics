@@ -1,0 +1,58 @@
+---
+title: "GROUP ASSIGNMENTS 2021-05-05"
+author: "NAMAZI | SCHMALHOFER | KNOCHE"
+date: "05/05/2021"
+output: html_document
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# loading packages
+library(wooldridge)
+# loading data sets 
+data("bwght2")
+```
+
+## Chapter 3 - 5
+In a study relating college grade point average to time spent in various activities, you distribute a survey to several students. The students are asked how many hours they spend each week in four activities: studying, sleeping, working, and leisure. Any activity is put into one of the four categories, so that for each student, the sum of hours in the four activities must be 168.
+
+1. In the model $$GPA = \beta_{0} + \beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure + u,$$ does it make sense to hold sleep, work, and leisure fixed, while changing study?
+
+`No, it wouldn't make sense.`
+
+2. Explain why this model violates Assumption MLR.3.
+
+Because $GPA = \beta_{0} + \beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure + u$, while is $GPA = 168$ means that $\beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure \hat{=} 168$.
+Accordingly any summand of $\beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure$ is calculable through the equation.
+
+3. How could you reformulate the model so that its parameters have a useful interpretation and it satisfies Assumption MLR.3?
+
+`Leaving out any one coefficient (i.e. sleep) would suffice to satisfy MLR.3 .`
+
+## Chapter 3 - C7
+Use `bwght2.dta` to answer this question.
+
+1. Estimate the model $$log(bwght) = \beta_{0} + \beta_{1} cigs + \beta_{2} npvis + u,$$
+and report the results in the usual form, including the sample size and R-squared. Are the signs of the slope coefficients what you expected? Explain.
+
+```{r echo=FALSE}
+model_1 <- lm(lbwght ~ cigs + npvis, data = bwght2)
+smry_1 <- model_1
+smry_1
+```
+
+2. If `npvis` increases by one sample standard deviation, what is the estimated effect on birth weight?
+
+```{r echo=FALSE}
+sd_npvis = sd(bwght2$npvis, na.rm = TRUE) # cor( , use=)
+sd_npvis
+```
+
+3. Now run the simple regression of log(`bwght`) on `cigs`, and compare the slope coefficient with the estimate obtained in part 1. Is the estimated effect of cigarette smoking much different than in part 1?
+
+
+4. Find the correlation between `cigs` and `npvis` and use it to explain the similarity of the simple and multiple regression estimates of $\beta_{1}$.
+
+
+5. Add the variables `mage`, `meduc`, `fage`, and `feduc` to the regression from part (i). Is birth weight [more precisely log(`bwght`)] an easy variable to explain?
