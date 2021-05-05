@@ -30,6 +30,24 @@ Accordingly any summand of $\beta_{1} study + \beta_{2} sleep + \beta_{3} work +
 
 `Leaving out any one coefficient (i.e. sleep) would suffice to satisfy MLR.3 .`
 
+## Chapter 3 - 7
+Which of the following can cause OLS estimators to be biased?
+
+1. Heteroskedasticity.
+2. Omitting an important variable.
+3. A sample correlation coefficient of 0.95 between two independent variables both included in the model.
+
+## Chapter 3 - C6
+Use the data set in `wage2.dta` for this problem. As usual, be sure all of the following regressions contain an intercept.
+
+1. Run a simple regression of IQ on educ to obtain the slope coefficient, say, $\tilde{ \delta_{1} }$.
+
+2. Run the simple regression of log(`wage`) on `educ`, and obtain the slope coefficient, $\tilde{ \beta_{1} }$.
+
+3. Run the regression of log(`wage`) on `educ` and `IQ`, and obtain the slope coefficients, $\hat{ \beta_{1} }$ and $\hat{ \beta_{2} }$ , respectively.
+
+4. Verify that $\tilde{ \beta_{1} } = \hat{ \beta_{1} } + \hat{ \beta_{2} } \tilde{ \delta_{1} }$.
+
 ## Chapter 3 - C7
 Use `bwght2.dta` to answer this question.
 
