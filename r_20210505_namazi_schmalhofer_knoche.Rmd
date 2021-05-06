@@ -12,42 +12,73 @@ knitr::opts_chunk$set(echo = TRUE)
 library(wooldridge)
 # loading data sets 
 data("bwght2")
+data("wage2")
 ```
-
+***
 ## Chapter 3 - 5
 In a study relating college grade point average to time spent in various activities, you distribute a survey to several students. The students are asked how many hours they spend each week in four activities: studying, sleeping, working, and leisure. Any activity is put into one of the four categories, so that for each student, the sum of hours in the four activities must be 168.
 
 1. In the model $$GPA = \beta_{0} + \beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure + u,$$ does it make sense to hold sleep, work, and leisure fixed, while changing study?
 
-`No, it wouldn't make sense.`
+> No, it wouldn't make sense.
 
 2. Explain why this model violates Assumption MLR.3.
 
-Because $GPA = \beta_{0} + \beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure + u$, while is $GPA = 168$ means that $\beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure \hat{=} 168$.
-Accordingly any summand of $\beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure$ is calculable through the equation.
+> $$GPA = \beta_{0} + \beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure + u = 168$$ This implies that $$\beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure \hat{ = } 168.$$ Accordingly any summand is calculable through the equation.
 
 3. How could you reformulate the model so that its parameters have a useful interpretation and it satisfies Assumption MLR.3?
 
-`Leaving out any one coefficient (i.e. sleep) would suffice to satisfy MLR.3 .`
+> Leaving out any one coefficient (i.e. sleep) would suffice to satisfy MLR.3 .
 
+***
 ## Chapter 3 - 7
 Which of the following can cause OLS estimators to be biased?
 
 1. Heteroskedasticity.
+
+> Yes.
+
 2. Omitting an important variable.
+
+> Yes.
+
 3. A sample correlation coefficient of 0.95 between two independent variables both included in the model.
 
+> No, but it would not be desirable.
+
+***
 ## Chapter 3 - C6
 Use the data set in `wage2.dta` for this problem. As usual, be sure all of the following regressions contain an intercept.
 
-1. Run a simple regression of IQ on educ to obtain the slope coefficient, say, $\tilde{ \delta_{1} }$.
+1. Run a simple regression of `IQ` on `educ` to obtain the slope coefficient, say, $\tilde{ \delta_{1} }$.
+
+```{r echo=FALSE}
+my_lm_iq <- lm(IQ ~ educ, data = wage2)
+my_lm_iq_0 <- round(my_lm_iq$coefficients[1], 4)
+my_lm_iq_1 <- round(my_lm_iq$coefficients[2], 4)
+my_smry_iq <- summary(my_lm_iq)
+my_r_sqr_iq <- round(my_smry_iq$r.squared, 4) * 100
+print(paste("IQ =", my_lm_iq_0, "+", my_lm_iq_1, "educ + u"))
+print(paste("tilde-delta1 =", my_lm_iq_1, "educ"))
+```
 
 2. Run the simple regression of log(`wage`) on `educ`, and obtain the slope coefficient, $\tilde{ \beta_{1} }$.
+
+```{r echo=FALSE}
+my_slm_log_wage <- lm(lwage ~ educ, data = wage2)
+my_slm_log_wage_0 <- round(my_slm_log_wage$coefficients[1], 4)
+my_slm_log_wage_1 <- round(my_slm_log_wage$coefficients[2], 4)
+my_smry_slm_log_wage <- summary(my_slm_log_wage)
+my_r_sqr_slm_log_wage <- round(my_smry_slm_log_wage$r.squared, 4) * 100
+print(paste("log(wage) =", my_slm_log_wage_0, "+", my_slm_log_wage_1, "educ + u"))
+print(paste("tilde-beta1 =", my_slm_log_wage_1, "educ"))
+```
 
 3. Run the regression of log(`wage`) on `educ` and `IQ`, and obtain the slope coefficients, $\hat{ \beta_{1} }$ and $\hat{ \beta_{2} }$ , respectively.
 
 4. Verify that $\tilde{ \beta_{1} } = \hat{ \beta_{1} } + \hat{ \beta_{2} } \tilde{ \delta_{1} }$.
 
+***
 ## Chapter 3 - C7
 Use `bwght2.dta` to answer this question.
 
