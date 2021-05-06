@@ -53,30 +53,50 @@ Use the data set in `wage2.dta` for this problem. As usual, be sure all of the f
 1. Run a simple regression of `IQ` on `educ` to obtain the slope coefficient, say, $\tilde{ \delta_{1} }$.
 
 ```{r echo=FALSE}
-my_lm_iq <- lm(IQ ~ educ, data = wage2)
-my_lm_iq_0 <- round(my_lm_iq$coefficients[1], 4)
-my_lm_iq_1 <- round(my_lm_iq$coefficients[2], 4)
-my_smry_iq <- summary(my_lm_iq)
-my_r_sqr_iq <- round(my_smry_iq$r.squared, 4) * 100
-print(paste("IQ =", my_lm_iq_0, "+", my_lm_iq_1, "educ + u"))
-print(paste("tilde-delta1 =", my_lm_iq_1, "educ"))
+my_slm_iq <- lm(IQ ~ educ, data = wage2)
+my_slm_iq_0 <- round(my_slm_iq$coefficients[1], 4)
+my_slm_iq_1 <- round(my_slm_iq$coefficients[2], 4)
+my_slm_smry_iq <- summary(my_slm_iq)
+my_slm_r_sqr_iq <- round(my_slm_smry_iq$r.squared, 4) * 100
+print(paste("IQ =", my_slm_iq_0, "+", my_slm_iq_1, "educ + u"))
+print(paste("tilde-delta1 =", my_slm_iq_1, "educ"))
 ```
 
 2. Run the simple regression of log(`wage`) on `educ`, and obtain the slope coefficient, $\tilde{ \beta_{1} }$.
 
 ```{r echo=FALSE}
-my_slm_log_wage <- lm(lwage ~ educ, data = wage2)
-my_slm_log_wage_0 <- round(my_slm_log_wage$coefficients[1], 4)
-my_slm_log_wage_1 <- round(my_slm_log_wage$coefficients[2], 4)
-my_smry_slm_log_wage <- summary(my_slm_log_wage)
-my_r_sqr_slm_log_wage <- round(my_smry_slm_log_wage$r.squared, 4) * 100
-print(paste("log(wage) =", my_slm_log_wage_0, "+", my_slm_log_wage_1, "educ + u"))
-print(paste("tilde-beta1 =", my_slm_log_wage_1, "educ"))
+my_slm_lwage <- lm(lwage ~ educ, data = wage2)
+my_slm_lwage_0 <- round(my_slm_lwage$coefficients[1], 4)
+my_slm_lwage_1 <- round(my_slm_lwage$coefficients[2], 4)
+my_slm_smry_lwage <- summary(my_slm_lwage)
+my_slm_r_sqr_lwage <- round(my_slm_smry_lwage$r.squared, 4) * 100
+print(paste("log(wage) =", my_slm_lwage_0, "+", my_slm_lwage_1, "educ + u"))
+print(paste("tilde-beta1 =", my_slm_lwage_1, "educ"))
 ```
 
 3. Run the regression of log(`wage`) on `educ` and `IQ`, and obtain the slope coefficients, $\hat{ \beta_{1} }$ and $\hat{ \beta_{2} }$ , respectively.
 
+```{r echo=FALSE}
+my_mlm_lwage <- lm(lwage ~ educ + IQ, data = wage2)
+my_mlm_lwage_0 <- round(my_mlm_lwage$coefficients[1], 4)
+my_mlm_lwage_1 <- round(my_mlm_lwage$coefficients[2], 4)
+my_mlm_lwage_2 <- round(my_mlm_lwage$coefficients[3], 4)
+my_mlm_smry_lwage <- summary(my_mlm_lwage)
+my_mlm_r_sqr_lwage <- round(my_mlm_smry_lwage$r.squared, 4) * 100
+print(paste("log(wage) =", my_mlm_lwage_0, "+", my_mlm_lwage_1, "educ +", my_mlm_lwage_2, "IQ + u"))
+print(paste("hat-beta1 =", my_mlm_lwage_1, "educ"))
+print(paste("hat-beta2 =", my_mlm_lwage_2, "IQ"))
+```
+
 4. Verify that $\tilde{ \beta_{1} } = \hat{ \beta_{1} } + \hat{ \beta_{2} } \tilde{ \delta_{1} }$.
+
+```{r echo=FALSE}
+# equation with rounded values for better readability
+print(paste(my_slm_lwage_1, "=", my_mlm_lwage_1, "+", my_mlm_lwage_2, "*", my_slm_iq_1))
+# avoid the rounded values for the final comparison
+print(paste(my_slm_lwage$coefficients[2], "=", my_mlm_lwage$coefficients[2] + my_mlm_lwage$coefficients[3] * my_slm_iq$coefficients[2]))
+```
+
 
 ***
 ## Chapter 3 - C7
