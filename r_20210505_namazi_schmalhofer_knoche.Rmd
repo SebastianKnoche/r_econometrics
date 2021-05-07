@@ -16,6 +16,7 @@ data("wage2")
 ```
 ***
 ## Chapter 3 - 5
+
 In a study relating college grade point average to time spent in various activities, you distribute a survey to several students. The students are asked how many hours they spend each week in four activities: studying, sleeping, working, and leisure. Any activity is put into one of the four categories, so that for each student, the sum of hours in the four activities must be 168.
 
 1. In the model $$GPA = \beta_{0} + \beta_{1} study + \beta_{2} sleep + \beta_{3} work + \beta_{4} leisure + u,$$ does it make sense to hold sleep, work, and leisure fixed, while changing study?
@@ -32,6 +33,7 @@ In a study relating college grade point average to time spent in various activit
 
 ***
 ## Chapter 3 - 7
+
 Which of the following can cause OLS estimators to be biased?
 
 1. Heteroskedasticity.
@@ -48,6 +50,7 @@ Which of the following can cause OLS estimators to be biased?
 
 ***
 ## Chapter 3 - C6
+
 Use the data set in `wage2.dta` for this problem. As usual, be sure all of the following regressions contain an intercept.
 
 1. Run a simple regression of `IQ` on `educ` to obtain the slope coefficient, say, $\tilde{ \delta_{1} }$.
@@ -56,9 +59,11 @@ Use the data set in `wage2.dta` for this problem. As usual, be sure all of the f
 my_slm_iq <- lm(IQ ~ educ, data = wage2)
 my_slm_iq_0 <- round(my_slm_iq$coefficients[1], 4)
 my_slm_iq_1 <- round(my_slm_iq$coefficients[2], 4)
-my_slm_smry_iq <- summary(my_slm_iq)
-my_slm_r_sqr_iq <- round(my_slm_smry_iq$r.squared, 4) * 100
+my_slm_iq_smry <- summary(my_slm_iq)
+my_slm_iq_r_sqr <- round(my_slm_iq_smry$r.squared, 4) * 100
 print(paste("IQ =", my_slm_iq_0, "+", my_slm_iq_1, "educ + u"))
+print(paste("R^2 =", my_slm_iq_r_sqr, "%"))
+print(paste("Sample size =", length(wage2[[1]])))
 print(paste("tilde-delta1 =", my_slm_iq_1, "educ"))
 ```
 
@@ -68,9 +73,11 @@ print(paste("tilde-delta1 =", my_slm_iq_1, "educ"))
 my_slm_lwage <- lm(lwage ~ educ, data = wage2)
 my_slm_lwage_0 <- round(my_slm_lwage$coefficients[1], 4)
 my_slm_lwage_1 <- round(my_slm_lwage$coefficients[2], 4)
-my_slm_smry_lwage <- summary(my_slm_lwage)
-my_slm_r_sqr_lwage <- round(my_slm_smry_lwage$r.squared, 4) * 100
+my_slm_lwage_smry <- summary(my_slm_lwage)
+my_slm_lwage_r_sqr <- round(my_slm_lwage_smry$r.squared, 4) * 100
 print(paste("log(wage) =", my_slm_lwage_0, "+", my_slm_lwage_1, "educ + u"))
+print(paste("R^2 =", my_slm_lwage_r_sqr, "%"))
+print(paste("Sample size =", length(wage2[[1]])))
 print(paste("tilde-beta1 =", my_slm_lwage_1, "educ"))
 ```
 
@@ -81,9 +88,11 @@ my_mlm_lwage <- lm(lwage ~ educ + IQ, data = wage2)
 my_mlm_lwage_0 <- round(my_mlm_lwage$coefficients[1], 4)
 my_mlm_lwage_1 <- round(my_mlm_lwage$coefficients[2], 4)
 my_mlm_lwage_2 <- round(my_mlm_lwage$coefficients[3], 4)
-my_mlm_smry_lwage <- summary(my_mlm_lwage)
-my_mlm_r_sqr_lwage <- round(my_mlm_smry_lwage$r.squared, 4) * 100
+my_mlm_lwage_smry <- summary(my_mlm_lwage)
+my_mlm_lwage_r_sqr <- round(my_mlm_lwage_smry$r.squared, 4) * 100
 print(paste("log(wage) =", my_mlm_lwage_0, "+", my_mlm_lwage_1, "educ +", my_mlm_lwage_2, "IQ + u"))
+print(paste("R^2 =", my_mlm_lwage_r_sqr, "%"))
+print(paste("Sample size =", length(wage2[[1]])))
 print(paste("hat-beta1 =", my_mlm_lwage_1, "educ"))
 print(paste("hat-beta2 =", my_mlm_lwage_2, "IQ"))
 ```
@@ -100,28 +109,53 @@ print(paste(my_slm_lwage$coefficients[2], "=", my_mlm_lwage$coefficients[2] + my
 
 ***
 ## Chapter 3 - C7
+
 Use `bwght2.dta` to answer this question.
 
 1. Estimate the model $$log(bwght) = \beta_{0} + \beta_{1} cigs + \beta_{2} npvis + u,$$
 and report the results in the usual form, including the sample size and R-squared. Are the signs of the slope coefficients what you expected? Explain.
 
 ```{r echo=FALSE}
-model_1 <- lm(lbwght ~ cigs + npvis, data = bwght2)
-smry_1 <- model_1
-smry_1
+my_mlm_lbwght <- lm(lbwght ~ cigs + npvis, data = bwght2)
+my_mlm_lbwght_0 <- round(my_mlm_lbwght$coefficients[1], 4)
+my_mlm_lbwght_1 <- round(my_mlm_lbwght$coefficients[2], 4)
+my_mlm_lbwght_2 <- round(my_mlm_lbwght$coefficients[3], 4)
+my_mlm_lbwght_smry <- summary(my_mlm_lbwght)
+my_mlm_lbwght_r_sqr <- round(my_mlm_lbwght_smry$r.squared, 4) * 100
+print(paste("log(bwght) =", my_mlm_lbwght_0, "+", my_mlm_lbwght_1, "cigs +", my_mlm_lbwght_2, "npvis + u"))
+print(paste("R^2 =", my_mlm_lbwght_r_sqr, "%"))
+print(paste("Sample size =", length(bwght2[[1]])))
 ```
+> Yes, a negative sign of the slope was expected due to the effects of cigarette smoking during pregnancies.
 
 2. If `npvis` increases by one sample standard deviation, what is the estimated effect on birth weight?
 
 ```{r echo=FALSE}
-sd_npvis = sd(bwght2$npvis, na.rm = TRUE) # cor( , use=)
-sd_npvis
+my_sd_npvis = round(sd(bwght2$npvis, na.rm = TRUE), 4)
+print(paste("The estimated effect on bwght is", round(my_sd_npvis * my_mlm_lbwght$coefficients[3], 4) * 100, "%, for an increase in npvis by", my_sd_npvis, "."))
 ```
 
 3. Now run the simple regression of log(`bwght`) on `cigs`, and compare the slope coefficient with the estimate obtained in part 1. Is the estimated effect of cigarette smoking much different than in part 1?
 
+```{r echo=FALSE}
+my_slm_lbwght <- lm(lbwght ~ cigs, data = bwght2)
+my_slm_lbwght_0 <- round(my_slm_lbwght$coefficients[1], 4)
+my_slm_lbwght_1 <- round(my_slm_lbwght$coefficients[2], 4)
+my_slm_lbwght_smry <- summary(my_slm_lbwght)
+my_slm_lbwght_r_sqr <- round(my_slm_lbwght_smry$r.squared, 4) * 100
+print(paste("log(bwght) =", my_slm_lbwght_0, "+", my_slm_lbwght_1, "cigs + u"))
+print(paste("R^2 =", my_slm_lbwght_r_sqr, "%"))
+print(paste("Sample size =", length(bwght2[[1]])))
+print(paste("The estimated effect of cigarette smoking is stronger than in part 1."))
+print(paste("The slope changes by:", 100 * round(my_mlm_lbwght$coefficients[2], 6), "% -", 100 * round(my_slm_lbwght$coefficients[2], 6), "% =", 100 * round(my_mlm_lbwght$coefficients[2] - my_slm_lbwght$coefficients[2], 6), "%."))
+```
+
 
 4. Find the correlation between `cigs` and `npvis` and use it to explain the similarity of the simple and multiple regression estimates of $\beta_{1}$.
+
+```{r}
+# cor( , use=)
+```
 
 
 5. Add the variables `mage`, `meduc`, `fage`, and `feduc` to the regression from part (i). Is birth weight [more precisely log(`bwght`)] an easy variable to explain?
