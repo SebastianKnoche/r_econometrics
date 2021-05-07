@@ -146,16 +146,35 @@ my_slm_lbwght_r_sqr <- round(my_slm_lbwght_smry$r.squared, 4) * 100
 print(paste("log(bwght) =", my_slm_lbwght_0, "+", my_slm_lbwght_1, "cigs + u"))
 print(paste("R^2 =", my_slm_lbwght_r_sqr, "%"))
 print(paste("Sample size =", length(bwght2[[1]])))
-print(paste("The estimated effect of cigarette smoking is stronger than in part 1."))
+print(paste("The estimated effect of cigarette smoking is very similar, but slightly stronger than in part 1."))
 print(paste("The slope changes by:", 100 * round(my_mlm_lbwght$coefficients[2], 6), "% -", 100 * round(my_slm_lbwght$coefficients[2], 6), "% =", 100 * round(my_mlm_lbwght$coefficients[2] - my_slm_lbwght$coefficients[2], 6), "%."))
 ```
 
 
 4. Find the correlation between `cigs` and `npvis` and use it to explain the similarity of the simple and multiple regression estimates of $\beta_{1}$.
 
-```{r}
-# cor( , use=)
+```{r echo=FALSE}
+my_cor_cigs_npvis <- cor(bwght2$cigs, bwght2$npvis, use = "na.or.complete")
+print(paste("The correlation coefficient is", round(my_cor_cigs_npvis, 4), ", the relationship between cigs and npvis is very vague and negative."))
+print("Appearingly, not only the causality (explained through the regression) but also the correlation of cigs and npvis is very small and therefore the difference between the simple regression and the multiple regression is also very small (greater similarity).")
 ```
 
 
 5. Add the variables `mage`, `meduc`, `fage`, and `feduc` to the regression from part (i). Is birth weight [more precisely log(`bwght`)] an easy variable to explain?
+
+```{r echo=FALSE}
+my_mlm_lbwght_2 <- lm(lbwght ~ cigs + npvis +mage + meduc + fage + feduc, data = bwght2)
+my_mlm_lbwght_2_0 <- round(my_mlm_lbwght_2$coefficients[1], 4)
+my_mlm_lbwght_2_1 <- round(my_mlm_lbwght_2$coefficients[2], 4)
+my_mlm_lbwght_2_2 <- round(my_mlm_lbwght_2$coefficients[3], 4)
+my_mlm_lbwght_2_3 <- round(my_mlm_lbwght_2$coefficients[4], 4)
+my_mlm_lbwght_2_4 <- round(my_mlm_lbwght_2$coefficients[5], 4)
+my_mlm_lbwght_2_5 <- round(my_mlm_lbwght_2$coefficients[6], 4)
+my_mlm_lbwght_2_6 <- round(my_mlm_lbwght_2$coefficients[7], 4)
+my_mlm_lbwght_2_smry <- summary(my_mlm_lbwght_2)
+my_mlm_lbwght_2_r_sqr <- round(my_mlm_lbwght_2_smry$r.squared, 4) * 100
+print(paste("log(bwght) =", my_mlm_lbwght_2_0, "+", my_mlm_lbwght_2_1, "cigs +", my_mlm_lbwght_2_2, "npvis +", my_mlm_lbwght_2_3, "mage +", my_mlm_lbwght_2_4, "meduc +", my_mlm_lbwght_2_5, "fage +", my_mlm_lbwght_2_6, "feduc + u"))
+print(paste("R^2 =", my_mlm_lbwght_2_r_sqr, "%"))
+print(paste("Sample size =", length(bwght2[[1]])))
+print(paste("Since R^2 is only", my_mlm_lbwght_2_r_sqr, "% and all couefficients are smaller than or equal to 0.5%, log(bwght) is a rather difficould variable to explain."))
+```
