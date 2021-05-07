@@ -176,5 +176,5 @@ my_mlm_lbwght_2_r_sqr <- round(my_mlm_lbwght_2_smry$r.squared, 4) * 100
 print(paste("log(bwght) =", my_mlm_lbwght_2_0, "+", my_mlm_lbwght_2_1, "cigs +", my_mlm_lbwght_2_2, "npvis +", my_mlm_lbwght_2_3, "mage +", my_mlm_lbwght_2_4, "meduc +", my_mlm_lbwght_2_5, "fage +", my_mlm_lbwght_2_6, "feduc + u"))
 print(paste("R^2 =", my_mlm_lbwght_2_r_sqr, "%"))
 print(paste("Sample size =", length(bwght2[[1]])))
-print(paste("Since R^2 is only", my_mlm_lbwght_2_r_sqr, "% and all couefficients are smaller than or equal to 0.5%, log(bwght) is a rather difficould variable to explain."))
+print(paste("Since R^2 is only", my_mlm_lbwght_2_r_sqr, "% and all coefficients are smaller than or equal to 0.5%, log(bwght) is a rather difficould variable to explain."))
 ```
