@@ -1,8 +1,12 @@
 ---
-title: "GROUP ASSIGNMENTS 2021-05-05"
+title: "GROUP ASSIGNMENTS"
+subtitle: "Due to 2021-05-12"
 author: "NAMAZI | SCHMALHOFER | KNOCHE"
-date: "05/05/2021"
-output: html_document
+date: "2021-05-05"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
 ---
 
 
