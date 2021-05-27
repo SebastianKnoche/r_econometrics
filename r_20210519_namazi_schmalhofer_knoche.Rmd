@@ -1,0 +1,40 @@
+---
+title: "GROUP ASSIGNMENTS"
+subtitle: "Due to 2021-05-12"
+author: "NAMAZI | SCHMALHOFER | KNOCHE"
+date: "`r format(file.info(R.home())$ctime, '%Y-%m-%d')`"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+# loading packages
+library(wooldridge)
+# loading data sets 
+data("lawsch85")
+```
+
+## C2
+
+Use the data in lawsch85.raw for this exercise. Consider the following model:
+$$log(salary) = \beta_{0} + \beta_{1} LSAT + \beta_{2} GPA + \beta_{3} log(libvol) + \beta_{4} log(cost) + \beta_{5} rank + u,$$
+where `LSAT` is the median LSAT score for the graduating class (Law School Admission Test), `GPA` is the median college GPA (vergleichbar mit Abiturnote in Deutschland), `libvol` is the number of volumes in the law school library, `cost` is the annual cost of attending law school, and `rank` is a law school ranking (with rank = 1 being the best).
+
+1. State and test the null hypothesis that the rank of law schools has no ceteris paribus
+effect on median starting salary.  
+
+2. Are features of the incoming class of students—namely, LSAT and GPA—individually or
+jointly significant for explaining salary? (Be sure to account for missing data on LSAT
+and GPA.)  
+
+3. Test whether the size of the entering class (clsize) or the size of the faculty (faculty) needs
+to be added to this equation; carry out a single test. (Be careful to account for missing
+data on clsize and faculty.)  
+
+4. What factors might influence the rank of the law school that are not included in the
+salary regression?
+
