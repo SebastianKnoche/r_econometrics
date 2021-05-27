@@ -1,0 +1,140 @@
+---
+title: "GROUP ASSIGNMENTS"
+subtitle: "Due to 2021-06-02"
+author: "NAMAZI | SCHMALHOFER | KNOCHE"
+date: "`r format(file.info(R.home())$ctime, '%Y-%m-%d')`"
+output:
+  html_document:
+    keep_md: yes
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+## If a package is installed, it will be loaded. If any 
+## are not, the missing package(s) will be installed 
+## from CRAN and then loaded.
+
+## First specify the packages of interest
+packages = c(
+  "dplyr",
+  "ggplot2",
+  "wooldridge")
+
+## Now load or install&load all
+package.check <- lapply(
+  packages,
+  FUN = function(x) {
+    if (!require(x, character.only = TRUE)) {
+      install.packages(x, dependencies = TRUE)
+      library(x, character.only = TRUE)
+    }
+  }
+)
+```
+
+```{r functions definitions, echo=FALSE}
+mk_lm <- function(input_formula, input_data){
+  tmp_lm <- lm(as.formula(input_formula), data=input_data)
+  return(
+    list(
+      formula = input_formula,
+      lm = tmp_lm,
+      summary = summary(tmp_lm)
+    )
+  )
+}
+
+plot_residuals <- function(input_mk_lm, input_color = "red"){
+  hist(input_mk_lm$lm$residuals, main = paste("Residuals for", input_mk_lm$formula), xlab = "Residuals", col = input_color)
+}
+```
+
+# Chapter 5
+
+## C1
+
+Use the `wage1` data for this exercise
+
+```{r load wage1 dataset, echo=FALSE}
+data(wage1)
+```
+
+### 1.    Estimate the equation
+
+$wage = \beta_{0} + \beta_{1} educ + \beta_{2} exper + \beta_{3} tenure + u$
+
+```{r estimate a multiple regression model for wage, echo=FALSE}
+mlm_wage <- mk_lm(input_formula = "wage ~ educ + exper + tenure", input_data = wage1)
+```
+
+> $\begin{align*}
+`r names(mlm_wage$lm$model[1])` & = `r round(mlm_wage$lm$coefficients["(Intercept)"], 4)` + `r paste0(paste0("(", round(mlm_wage$lm$coefficients[names(mlm_wage$lm$coefficients)!="(Intercept)"], 4), ") ", names(mlm_wage$lm$coefficients[names(mlm_wage$lm$coefficients)!="(Intercept)"])), collapse = " + ")` + u \\  
+R^{2} & = `r round(mlm_wage$summary$r.squared, 6) * 100`\% ;    Sample size = `r length(mlm_wage$lm$residuals)` \\
+\end{align*}$  
+
+Plot a histogram of the residuals.
+
+```{r plot 1 wage model, fig.align='center', echo=FALSE, fig.cap="Plot 1: The frequency of the respective values for the residuals of the wage model"}
+plot_residuals(input_mk_lm = mlm_wage, input_color = "purple")
+```
+
+### 2.    Repeat part 1 including plotting, but with log(`wage`) as the dependent variable.
+
+```{r estimate a multiple regression model for log(wage), echo=FALSE}
+mlm_lwage <- mk_lm(input_formula = "lwage ~ educ + exper + tenure", input_data = wage1)
+```
+
+> $\begin{align*}
+`r names(mlm_lwage$lm$model[1])` & = `r round(mlm_lwage$lm$coefficients["(Intercept)"], 4)` + `r paste0(paste0("(", round(mlm_lwage$lm$coefficients[names(mlm_lwage$lm$coefficients)!="(Intercept)"], 4), ") ", names(mlm_lwage$lm$coefficients[names(mlm_lwage$lm$coefficients)!="(Intercept)"])), collapse = " + ")` + u \\  
+R^{2} & = `r round(mlm_lwage$summary$r.squared, 6) * 100`\% ;    Sample size = `r length(mlm_lwage$lm$residuals)` \\
+\end{align*}$  
+
+```{r plot 2 log(wage) model, fig.align='center', echo=FALSE, fig.cap="Plot 2: The frequency of the respective (relative) values for the residuals of the log(wage) model"}
+plot_residuals(input_mk_lm = mlm_lwage, input_color = "green")
+```
+
+### 3.    Would you say that Assumption MLR.6 is closer to being satisfied for the level-level model or the log-level model?
+
+> ?
+
+## C2
+
+Use the `gpa2` dataset.
+
+```{r load gpa2 dataset, echo=FALSE}
+data(gpa2)
+```
+
+### 1.    Using all 4137 observations, estimate the equation
+
+$colgpa = \beta_{0} + \beta_{1} hsperc + \beta_{2} sat + u$
+
+and report the results in the usual form.
+
+```{r estimate a multiple regression model for colgpa, echo=FALSE}
+mlm_colgpa <- mk_lm(input_formula = "colgpa ~ hsperc + sat", input_data = gpa2)
+```
+
+> $\begin{align*}
+`r names(mlm_colgpa$lm$model[1])` & = `r round(mlm_colgpa$lm$coefficients["(Intercept)"], 4)` + `r paste0(paste0("(", round(mlm_colgpa$lm$coefficients[names(mlm_colgpa$lm$coefficients)!="(Intercept)"], 4), ") ", names(mlm_colgpa$lm$coefficients[names(mlm_colgpa$lm$coefficients)!="(Intercept)"])), collapse = " + ")` + u \\  
+R^{2} & = `r round(mlm_colgpa$summary$r.squared, 6) * 100`\% ;    Sample size = `r length(mlm_colgpa$lm$residuals)` \\
+\end{align*}$  
+
+### 2.    Reestimate the equation in part 1, using the first 2700 observations.
+
+```{r estimate a multiple regression model for colgpa using the first 2700 observations, echo=FALSE}
+mlm_colgpa_2700 <- mk_lm(input_formula = "colgpa ~ hsperc + sat", input_data = head(gpa2, n = 2700))
+```
+
+> $\begin{align*}
+`r names(mlm_colgpa_2700$lm$model[1])` & = `r round(mlm_colgpa_2700$lm$coefficients["(Intercept)"], 4)` + `r paste0(paste0("(", round(mlm_colgpa_2700$lm$coefficients[names(mlm_colgpa_2700$lm$coefficients)!="(Intercept)"], 4), ") ", names(mlm_colgpa_2700$lm$coefficients[names(mlm_colgpa_2700$lm$coefficients)!="(Intercept)"])), collapse = " + ")` + u \\  
+R^{2} & = `r round(mlm_colgpa_2700$summary$r.squared, 6) * 100`\% ;    Sample size = `r length(mlm_colgpa_2700$lm$residuals)` \\
+\end{align*}$  
+
+### 3.    Find the ratio of standard errors on `hsperc` from parts 1 and 2. Compare this with the result from equation (5.10) in the Wooldridge book.
+
+```{r}
+#
+```
+
